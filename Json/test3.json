@@ -1,0 +1,246 @@
+{
+   "id":1,
+   "name":"BoxH",
+   "readOnly":true,
+   "children":[
+      {
+         "id":100,
+         "name":"Box1",
+         "readOnly":true,
+         "children":[
+            {
+               "id":1003,
+               "name":"Box2",
+               "children":[
+                  {
+                     "id":1019,
+                     "name":"BoxDet",
+                     "Ids":[
+                        "ABC",
+                        "ABC2",
+                        "DEF2",
+                        "DEFHD",
+                        "LKK"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    ]
+}
+
+{
+  "data": {
+     "current_condition": [
+		 {
+        "cloudcover": "0",
+        "humidity": "54",
+        "observation_time": "08:49 AM",
+        "precipMM": "0.0",
+        "pressure": "1025",
+        "temp_C": "10",
+        "temp_F": "50",
+        "visibility": "10",
+        "weatherCode": "113",
+        "weatherDesc": [{"value": "Sunny"},{"Note":"Value not exist"}],
+        "weatherIconUrl": [{
+            "value": "http:\/\/www.worldweatheronline.com\/images\/wsymbols01_png_64\/wsymbol_0001_sunny.png"
+        }],
+        "winddir16Point": "E",
+        "winddirDegree": "100",
+        "windspeedKmph": "22",
+        "windspeedMiles": "14"
+    }
+	 ]
+ }
+}
+
+
+import json
+weather = urllib2.urlopen('url')
+wjson = weather.read()
+wjdata = json.loads(wjson)
+print wjdata['data']['current_condition'][0]['temp_C']
+
+
+{
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters":
+		{
+			"batter":
+				[
+					{ "id": "1001", "type": "Regular" },
+					{ "id": "1002", "type": "Chocolate" },
+					{ "id": "1003", "type": "Blueberry" },
+					{ "id": "1004", "type": "Devil's Food" }
+				]
+		},
+	"topping":
+		[
+			{ "id": "5001", "type": "None" },
+			{ "id": "5002", "type": "Glazed" },
+			{ "id": "5005", "type": "Sugar" },
+			{ "id": "5007", "type": "Powdered Sugar" },
+			{ "id": "5006", "type": "Chocolate with Sprinkles" },
+			{ "id": "5003", "type": "Chocolate" },
+			{ "id": "5004", "type": "Maple" }
+		]
+}
+
+[
+	{
+		"id": "0001",
+		"type": "donut",
+		"name": "Cake",
+		"ppu": 0.55,
+		"batters":
+			{
+				"batter":
+					[
+						{ "id": "1001", "type": "Regular" },
+						{ "id": "1002", "type": "Chocolate" },
+						{ "id": "1003", "type": "Blueberry" },
+						{ "id": "1004", "type": "Devil's Food" }
+					]
+			},
+		"topping":
+			[
+				{ "id": "5001", "type": "None" },
+				{ "id": "5002", "type": "Glazed" },
+				{ "id": "5005", "type": "Sugar" },
+				{ "id": "5007", "type": "Powdered Sugar" },
+				{ "id": "5006", "type": "Chocolate with Sprinkles" },
+				{ "id": "5003", "type": "Chocolate" },
+				{ "id": "5004", "type": "Maple" }
+			]
+	},
+	{
+		"id": "0002",
+		"type": "donut",
+		"name": "Raised",
+		"ppu": 0.55,
+		"batters":
+			{
+				"batter":
+					[
+						{ "id": "1001", "type": "Regular" }
+					]
+			},
+		"topping":
+			[
+				{ "id": "5001", "type": "None" },
+				{ "id": "5002", "type": "Glazed" },
+				{ "id": "5005", "type": "Sugar" },
+				{ "id": "5003", "type": "Chocolate" },
+				{ "id": "5004", "type": "Maple" }
+			]
+	},
+	{
+		"id": "0003",
+		"type": "donut",
+		"name": "Old Fashioned",
+		"ppu": 0.55,
+		"batters":
+			{
+				"batter":
+					[
+						{ "id": "1001", "type": "Regular" },
+						{ "id": "1002", "type": "Chocolate" }
+					]
+			},
+		"topping":
+			[
+				{ "id": "5001", "type": "None" },
+				{ "id": "5002", "type": "Glazed" },
+				{ "id": "5003", "type": "Chocolate" },
+				{ "id": "5004", "type": "Maple" }
+			]
+	}
+]
+
+
+
+
+{
+	"items":
+		{
+			"item":
+				[
+					{
+						"id": "0001",
+						"type": "donut",
+						"name": "Cake",
+						"ppu": 0.55,
+						"batters":
+							{
+								"batter":
+									[
+										{ "id": "1001", "type": "Regular" },
+										{ "id": "1002", "type": "Chocolate" },
+										{ "id": "1003", "type": "Blueberry" },
+										{ "id": "1004", "type": "Devil's Food" }
+									]
+							},
+						"topping":
+							[
+								{ "id": "5001", "type": "None" },
+								{ "id": "5002", "type": "Glazed" },
+								{ "id": "5005", "type": "Sugar" },
+								{ "id": "5007", "type": "Powdered Sugar" },
+								{ "id": "5006", "type": "Chocolate with Sprinkles" },
+								{ "id": "5003", "type": "Chocolate" },
+								{ "id": "5004", "type": "Maple" }
+							]
+					},
+
+					...
+
+				]
+		}
+}
+
+
+
+
+
+{
+"problems": [{
+    "Diabetes":[{
+        "medications":[{
+            "medicationsClasses":[{
+                "className":[{
+                    "associatedDrug":[{
+                        "name":"asprin",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }],
+                    "associatedDrug#2":[{
+                        "name":"somethingElse",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }]
+                }],
+                "className2":[{
+                    "associatedDrug":[{
+                        "name":"asprin",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }],
+                    "associatedDrug#2":[{
+                        "name":"somethingElse",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }]
+                }]
+            }]
+        }],
+        "labs":[{
+            "missing_field": "missing_value"
+        }]
+    }],
+    "Asthma":[{}]
+}]}

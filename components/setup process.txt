@@ -1,0 +1,23 @@
+
+NPP idle connection setup
+
+1. Run program browse for the idle ( console) and lib idle
+2. Give extension in the path "$(FULL_CURRENT_PATH)" save with combination key
+
+Linux
+yum install MySQLdb-python
+
+Windows
+1. install mysql Database 
+2. install mysql connector for python version (3.4)
+     (mysql-connector-python-2.1.6-py3.4-winx64.msi)
+
+3. Test the connection between mysql and python.
+>>> import mysql.connector
+>>> conn=mysql.connector.connect(user='root',password='tiger',host='localhost',database='test')
+>>> mycursor=conn.cursor()
+>>> mycursor.execute("show tables")
+>>> print(mycursor.fetchall())
+>>> mycursor.execute("show variables like '%version%'")
+>>> print(mycursor.fetchall())
+

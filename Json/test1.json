@@ -1,0 +1,7 @@
+[
+{"type":"item","labels":{"en":{"language":"en","value":"George Washington"}},"descriptions":{"en":{"language":"en","value":"American politician, 1st president of the United States (in office from 1789 to 1797)"}},"id":"Q23"},
+{"type":"item","aliases":{"en":[{"language":"en","value":"Douglas Noël Adams"},{"language":"en","value":"Douglas Noel Adams"}]},"labels":{"en":{"language":"en","value":"Douglas Adams"}},"descriptions":{"en":{"language":"en","value":"English writer and humorist"}},"id":"Q42"},
+{"type":"item","aliases":{"en":[{"language":"en","value":"George Bush"},{"language":"en","value":"George Walker Bush"}]},"labels":{"en":{"language":"en","value":"George W. Bush"}},"descriptions":{"en":{"language":"en","value":"American politician, 43rd president of the United States from 2001 to 2009"}},"id":"Q207"},
+{"type":"item","aliases":{"en":[{"language":"en","value":"Velázquez"},{"language":"en","value":"Diego Rodríguez de Silva y Velázquez"}]},"labels":{"en":{"language":"en","value":"Diego Velázquez"}},"descriptions":{"en":{"language":"en","value":"Spanish painter who was the leading artist in the court of King Philip IV"}},"id":"Q297"},
+{"type":"item","labels":{"en":{"language":"en","value":"Eduardo Frei Ruiz-Tagle"}},"descriptions":{"en":{"language":"en","value":"Chilean politician and former President"}},"id":"Q326"}
+]
