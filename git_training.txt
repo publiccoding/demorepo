@@ -1,0 +1,21 @@
+
+
+
+git clone https://github.com/publiccoding/demorepo.git
+git status 
+GitPractice
+$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+
+kristhim@KRISTHIM4 MINGW64 ~/Desktop/thimma 01302017/programming/python/testing/GitPractice
+$ ls
+demorepo/
+$ cd demorepo/
+$git status ( will show the details) 
+$git add  file1, file2 ( or [./-A] # all untracked file will moved to staging area ) 
+$git commit (git -m commit) # it will move to staging area to local repository
+$git log # shows the information about every commit , all saved with unique id SHA code ( 40 characters) first 7 characters are important 
+$git push  # push it to remote repository
+$ git config --global user.name "thimma"
+$ git config --global user.email "thimmarayan.krishnappa@gmail.com"
+$ git config show --list
