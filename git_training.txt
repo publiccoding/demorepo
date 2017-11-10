@@ -19,3 +19,20 @@ $git push  # push it to remote repository
 $ git config --global user.name "thimma"
 $ git config --global user.email "thimmarayan.krishnappa@gmail.com"
 $ git config show --list
+$ git config reset remote.original.url 
+$ git log --online --decorate
+$ git reset HEAD # file will put into workspace 
+$ git log 
+$ git reset --soft (sha code)  # move to staging area 
+$ git reset HEAD  # get file from staging area to workspace 
+$ gitk  # show complete history 
+$ git reset --hard SHA code  # to  delete changes permanently 
+$ kristhim@KRISTHIM4 MINGW64 ~/Desktop/thimma 01302017/programming/Practice/Git Practice/central/myremote_repo.git
+$ git init --bare --shared # to create central bare repositoy locally  and do not create any directoy in bare repo as it will not be accisble to other users. 
+$ git init # change normal directory to git local repository 
+$ 
+
+
+
+
+
