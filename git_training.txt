@@ -31,7 +31,13 @@ $ kristhim@KRISTHIM4 MINGW64 ~/Desktop/thimma 01302017/programming/Practice/Git 
 $ git init --bare --shared # to create central bare repositoy locally  and do not create any directoy in bare repo as it will not be accisble to other users. 
 $ git init # change normal directory to git local repository 
 $ 
-
+git branch -all 
+git branch
+git branch module_settings
+git checkout module_settings
+git checkout master   # to jump to master branch
+git branch -d modlue_name # to delete the branch 
+git checkout module_menu # will pull all the file from master to modlue_menu branch 
 
 
 
