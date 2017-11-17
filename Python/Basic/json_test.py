@@ -13,13 +13,13 @@ import urllib.parse
 # q = []
 #
 # q.append({"fname":"Thimmarayan","lname":"Krishnappa"})
-# q.append({"fname":"Komala","lname":"Muniyappan"})
+
 #
 # print(json.dumps(q, indent=4))
 
 # in this example how to store json data in file using python utility
 
-# fout = open("C:\\Users\\kristhim\\PycharmProjects\\Programming\\Json\\test1.json",'w')
+# fout = open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\Json\test1.json",'w')
 # json.dump(q,fout,indent=4)
 # fout.close()
 
@@ -80,7 +80,7 @@ import urllib.parse
 #             # print()
 #             # print(fmt_address)
 
-fin = open("C:\\Users\\kristhim\\PycharmProjects\\Programming\\Json\\test2.json", 'r')
+fin = open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\Json\test2.json", 'r')
 jsonobj = json.load(fin)
 print (type(jsonobj))
 
