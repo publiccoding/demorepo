@@ -1,0 +1,26 @@
+{
+"report_id":"<report_id>",
+"use_hdb":false,
+"blades":["<hostname_host1>","<hostname_host2>","<hostname_host3>"],
+"tests": [{
+		"package": "NetworkTest",
+		"test_timeout": 0,
+		"id": 1,
+		"config": {"InternHosts":{"<hostname_host1>":"<IP_address_host1>",
+								  "<hostname_host2>":"<IP_address_host2>",
+								  "<hostname_host3>":"<IP_address_host3>"}
+		},
+		"class": "NetworkSingleStream"
+		},
+		{
+		"package": "NetworkTest",
+		"test_timeout": 0,
+		"id": 2,
+		"config": {"InternHosts":{"<hostname_host1>":"<IP_address_host1>",
+								  "<hostname_host2>":"<IP_address_host2>",
+				                  "<hostname_host3>":"<IP_address_host3>"}
+	},
+	"class": "NetworkBidirectStream"
+		}
+	]
+}

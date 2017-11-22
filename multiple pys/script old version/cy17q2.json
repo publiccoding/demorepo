@@ -1,0 +1,60 @@
+{
+  "use_hdb":false, 
+  "blades":["hana1-data","hana2-data"], 
+  "tests": [{ 
+                    "package": "LandscapeTest", 
+                    "test_timeout": 0, 
+                    "id": 0, 
+                    "config": {}, 
+                    "class": "EvalOs" 
+            }, 
+         { 
+             "package": "FilesystemTest", 
+             "test_timeout": 0, 
+             "id": 2, 
+             "config": {"mount":{"hana1-data":["/hana/data/PN1/mnt00001"], 
+                      "hana2-data":["/hana/data/PN1/mnt00002"]
+	
+			}, 
+                         "duration":"short" 
+                        }, 
+             "class": "DataVolumeIO" 
+         }, 
+         { 
+             "package": "FilesystemTest", 
+             "test_timeout": 0, 
+             "id": 3, 
+             "config": {"mount":{"hana1-data":["/hana/log/PN1/mnt00001"],
+			"hana2-data":["/hana/log/PN1/mnt00002"]
+                       }, 
+                         "duration":"short" 
+                       }, 
+             "class": "LogVolumeIO" 
+         }, 
+	{
+             "package": "FilesystemTest",
+             "test_timeout": 0,
+             "id": 4,
+             "config": {"mount":{"hana1-data":["/hana/data/PN1/mnt00001"],
+                      "hana2-data":["/hana/data/PN1/mnt00002"]
+
+                        },
+                         "duration":"long"
+                        },
+             "class": "DataVolumeIO"
+         },
+         {
+             "package": "FilesystemTest",
+             "test_timeout": 0,
+             "id": 5,
+             "config": {"mount":{"hana1-data":["/hana/log/PN1/mnt00001"],
+                        "hana2-data":["/hana/log/PN1/mnt00002"]
+                       },
+                         "duration":"long"
+                       },
+             "class": "LogVolumeIO"
+         }
+                
+
+] 
+}

@@ -1,0 +1,62 @@
+########################################################
+#Directories and files used by the application.
+#This file is hardcoded. patchResourceFile = "hp/support/patches/resourceFiles/patchResourceFile"
+#Also, it is expected that all files/directories exist off of /hp/support.
+#Do not change the names on the left side as they are 
+#the key names (resource names) used by the application.
+#Example patch directory structure.
+#/hp/support/patches/OSDistLevel/kernelRPMs/
+#/hp/support/patches/OSDistLevel/cs900kernelRPMs/
+#/hp/support/patches/OSDistLevel/OSRPMs/
+#/hp/support/patches/FusionIO/
+########################################################
+
+########################################################
+#This is the main patch directory name.
+########################################################
+patchBaseDir = /hp/support/patches
+logBaseDir = /hp/support/patches/log
+
+patchApplicationLog = patchUpdateLog.log
+fioStatusLog = fioStatusLog.log
+postUpdateResumeLog = resumeLog.log
+
+########################################################
+#This is the list of supported operating systems that can be updated.
+#AKA OSDistLevel
+########################################################
+11.3 = SLES_SP3
+11.4 = SLES_SP4
+
+########################################################
+#This is the kernel sub directory names.
+########################################################
+cs900KernelSubDir = cs900KernelRPMs
+kernelSubDir = kernelRPMs
+
+########################################################
+#This is the OS sub directory name.
+########################################################
+osSubDir = OSRPMs
+
+########################################################
+#This is the FusionIO software sub directory name.
+########################################################
+fusionIOSubDir = FusionIO
+
+########################################################
+#This is the current FusionIO firmware revision.
+########################################################
+currentFusionIOFirmwareVersion = v7.1.17
+
+########################################################
+#This is the current list of FusionIO firmware revisions.
+#These are the revisions from which an automatic upgrade
+#is supported
+########################################################
+fusionIOFirmwareVersionList = 'v7.1.17 v7.1.15 v7.1.13 v7.0.2 v6.0.0'
+
+########################################################
+#This is the current source RPM for FusionIO driver.
+########################################################
+fusionIODriverSrcRPM = iomemory-vsl-3.2.8.1350-1.0.src.rpm

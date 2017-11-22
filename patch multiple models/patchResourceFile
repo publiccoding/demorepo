@@ -1,0 +1,54 @@
+########################################################
+#Directories and files used by the application.
+#This file is hardcoded. patchResourceFile = "hp/support/patches/resourceFiles/patchResourceFile"
+#Also, it is expected that all files/directories exist off of /hp/support.
+#Do not change the names on the left side as they are 
+#the key names (resource names) used by the application.
+########################################################
+#
+########################################################
+#This is the main patch directory name.
+########################################################
+patchBaseDir = /hp/support/patches
+logBaseDir = /hp/support/patches/log
+
+applicationLog = mainUpdateLog.log
+zyppConfUpdateLog = zyppConfUpdateLog.log
+fioStatusLog = fioStatusLog.log
+postUpdateResumeLog = resumeLog.log
+
+########################################################
+#This is the list of supported operating systems that can be updated.
+#AKA OSDistLevel
+########################################################
+11.3 = SLES_SP3
+11.4 = SLES_SP4
+
+########################################################
+#This is the kernel sub directory names.
+########################################################
+cs900KernelSubDir = cs900KernelRPMs
+kernelSubDir = kernelRPMs
+
+########################################################
+#This is the OS sub directory name.
+########################################################
+osSubDir = OSRPMs
+
+########################################################
+#This is the FusionIO software sub directory name.
+########################################################
+fusionIOSubDir = FusionIO
+
+########################################################
+#Example patch directory structure.
+#/hp/support/patches/OSDistLevel/kernelRPMs/
+#/hp/support/patches/OSDistLevel/cs900kernelRPMs/
+#/hp/support/patches/OSDistLevel/OSRPMs/
+#/hp/support/patches/FusionIO/
+########################################################
+
+########################################################
+#This is the current FusionIO firmware version.
+########################################################
+fusionIOFirmware = 'v7.1.17 116786'
