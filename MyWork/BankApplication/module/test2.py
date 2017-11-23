@@ -54,17 +54,5 @@ def connClose():
 # conn.commit()
 
 
-path_start =r"C:\Users\kristhim\Desktop\work plan\Binary\csurUpdate-1.4-3.sles11.x86_64"
-for paths, dirs, files in os.walk(path_start):
-        files=os.listdir(os.chdir(paths))
-        print(files)
 
-        for f in files:
-            if f.endswith("pyc_dis"):
-                os.rename(f , "{}.py".format(f.split('.')[0]))
-            elif f.endswith("pyc"):
-                print(f)
-                os.remove(f)
-        print("File not found with above extension")
 
-dir(os)

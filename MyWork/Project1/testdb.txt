@@ -1,0 +1,2 @@
+{'thimma@gmail.com':{'name': 'Thimmarayan', 'pwd': 'Lakrthkuv@1'}}
+{'kumar@gmail.com': {'name': 'Kumar', 'pwd': 'Krlathkuv@1'}}
