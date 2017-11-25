@@ -1,6 +1,8 @@
 import pickle
 import json
-
+import ast
+import re
+import random
 class userRegistration:
     """    """
 
@@ -9,38 +11,52 @@ class userRegistration:
         self.path = path
         self.userDataList = []
 
-
     def new_User_Registration(self):
 
         datadic = {}
 
-        userid = input("Enter User ID should be your email ID :")
+        userid = input("Enter User ID :")
         uname =input("Enter user Name :")
         password = input("Enter password min 8 character :")
         address = input("Enter your Address :")
         phone = input("Enter your phone number :")
+        email = input("Enter your Email ID :")
+        accountno = self.accountNumber()
+        min_balance = input("Enter min Balance amount should be 1000 and above")
+        if min_balance < 1000:
+            print("Minimum Balance should be greater than 1000")
+        elif userid in self.getValue():
+            print("User already exist")
+        else:
+            datadic["name"]=uname
+            datadic["password"]=password
+            datadic["address"]=address
+            datadic["phone"]=phone
+            datadic["email"]=email
+            datadic["accountno"]= accountno
+            datadic["balance"] = min_balance
 
-        datadic["name"]=uname
-        datadic["password"]=password
-        datadic["address"]=address
-        datadic["phone"]=phone
-
-
-        self.userDataList.append(datadic)
-        self.userData[userid] = self.userDataList
+            #self.userDataList.append(datadic)
+            self.userData[userid] = datadic
 
 
         # Append data in the existing Userdata file
-        with open(self.path,'a') as userFile:
-            json.dump(self.userData,userFile)
-
+        try :
+            with open (self.path, "a" ) as test_db:
+                test_db.write(str(self.userData))
+                test_db.write('\n')
+        except IOError:
+            print("Unable to upload the data")
+    def accountNumber(self):
+        
+        acc_no = (x for x in range(1000,9999))
+        return acc_no.__next__()
+    
     def getValue(self):
-        with open (
-                r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\MyWork\Project1\testdb.txt",
-                "r" ) as read_db:
+        with open(self.path, "r") as read_db:
             for line in read_db:
                 line = ast.literal_eval (line)
-		return line 
+        return line
 
 
 

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BankApplication.iml" filepath="$PROJECT_DIR$/.idea/BankApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MyWork/BankingApplication/.idea/BankingApplication.iml" filepath="$PROJECT_DIR$/../../MyWork/BankingApplication/.idea/BankingApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../MyWork/.idea/MyWork.iml" filepath="$PROJECT_DIR$/../../MyWork/.idea/MyWork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../MyWork/Project1/.idea/Project1.iml" filepath="$PROJECT_DIR$/../../MyWork/Project1/.idea/Project1.iml" />
     </modules>
   </component>
 </project>

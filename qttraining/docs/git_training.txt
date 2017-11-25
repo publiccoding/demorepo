@@ -39,6 +39,22 @@ git checkout master   # to jump to master branch
 git branch -d modlue_name # to delete the branch 
 git checkout module_menu # will pull all the file from master to modlue_menu branch 
 
+git branch -d the_local_branch
+To remove a remote branch (if you know what you are doing!)
 
+COPY
+git push origin :the_remote_branch
+or simply use the new syntax (v1.7.0)
+
+COPY
+git push origin --delete the_remote_branch
+Note
+
+If you get the error error: unable to push to unqualified destination: the_remote_branch The destination refspec neither matches an existing ref on the remote nor begins with refs/, and we are unable to guess a prefix based on the source ref. error: failed to push some refs to 'git@repository_name'
+
+perhaps someone else has already deleted the branch. Try to synchronize your branch list with
+
+COPY
+git fetch -p 
 
 

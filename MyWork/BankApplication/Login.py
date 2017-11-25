@@ -21,19 +21,30 @@ def userRegister():
         exit()
 
 def userLogin(userdata):
-    if username in userdata:
-        pwd = userdata[username][0]["password"]
-        userpwd = input( "Enter your password" )
-        count = 1
-        while userpwd.strip() != pwd and count < 3:
-            userpwd = input( "Enter your password" )
-            count += 1
-            continue
-        else:
-            print( " You are successfully logged in" )
-            exit()
+    if username in userdata.keys():
+        user_pwd = input("Enter password :")
+        for pwd in userdata.values():
+            if pwd['pwd'] == user_pwd:
+
+    # if username in userdata:
+    #     pwd = userdata[username][0]["password"]
+    #     userpwd = input( "Enter your password" )
+    #     count = 1
+    #     while userpwd.strip() != pwd and count < 3:
+    #         userpwd = input( "Enter your password" )
+    #         count += 1
+    #         continue
+    #     else:
+    #         print( " You are successfully logged in" )
+    #         exit()
     else:
         userRegister()
+
+        if username in line.keys ():
+            pwd = input ( "Enter Password" )
+            for d in line.values ():
+                if d['pwd'] == pwd:
+                    print ( "Your Logged in successfully" )
 
 username = input( "Enter username " )
 try:

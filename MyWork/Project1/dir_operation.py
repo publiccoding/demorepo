@@ -44,15 +44,23 @@ import json
 import ast
 
 username = input("Enter your username")
+
 with open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\MyWork\Project1\testdb.txt",
             "r") as read_db:
     for line in read_db:
         line=ast.literal_eval(line)
         if username in line.keys():
-            pwd = input("Enter Password")
-            for d in line.values ():
-                if d['pwd'] == pwd :
-                    print("Your Logged in successfully")
+            for p in line.values():
+                print(p['pwd'])
+
+
+                    # if username in line.keys ():
+                    #     print ( line )
+                    #     pwd = input ( "Enter Password" )
+                    #     print ( line.values () )
+                    #     for d in line.values ():
+                    #         if d['pwd'] == pwd:
+                    #             print ( "Your Logged in successfully" )
 
 
 
@@ -76,8 +84,7 @@ with open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demor
 
 
 
-
-    # import os
+                                # import os
     # import signal
     #
     #
@@ -102,3 +109,12 @@ with open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demor
     # # End signal_handler(signum, frame):
     #
     # signal_handler()
+
+
+# username =
+# password =
+# email_id =
+# address =
+# phone =
+# account_no=
+# pan_id =
