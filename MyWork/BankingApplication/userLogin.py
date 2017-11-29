@@ -7,7 +7,7 @@ def main():
 
     """ This module is used for login user else direct to New user registration"""
 
-path = r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\MyWork\BankingApplication\UserData.txt"
+path = r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo\MyWork\BankingApplication\module\UserData.txt"
 def userRegister():
     data = input( "Do you want to Register (y|n)" )
     if data == "y":
@@ -69,7 +69,7 @@ def userLogin(userdata):
 
 username = input( "Enter username " )
 try:
-    userdata = userRegistration(path).getValue()
+    userdata = userRegistration.userRegistration(path).getValue()
     print(userdata)
     userLogin(userdata)
 

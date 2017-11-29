@@ -12,7 +12,7 @@ class userRegistration:
         self.userDataList = []
 
     def new_User_Registration(self):
-
+        print(self.path)
         datadic = {}
 
         userid = input("Enter User ID :")
@@ -22,10 +22,10 @@ class userRegistration:
         phone = input("Enter your phone number :")
         email = input("Enter your Email ID :")
         accountno = self.accountNumber()
-        min_balance = input("Enter min Balance amount should be 1000 and above")
+        min_balance = int(input("Enter min Balance amount should be 1000 and above"))
         if min_balance < 1000:
             print("Minimum Balance should be greater than 1000")
-        elif userid in self.getValue():
+        elif userid in self.getValue(): # logic missing
             print("User already exist")
         else:
             datadic["name"]=uname
