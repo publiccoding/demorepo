@@ -82,3 +82,9 @@
 #
 # for i in myfunction(2,20,2):
 #     print(i)
+
+
+def function():
+    value=1
+    if value in dict:
+        print("this is test")

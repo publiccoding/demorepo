@@ -1,13 +1,6 @@
 
 
-def acc_test():
+def Function():
+    print("hellow world")
 
-    print(accountNumber())
-
-
-def accountNumber(self):
-    acc_no = (x for x in range ( 1000, 9999 ))
-    return acc_no.__next__ ()
-
-
-acc_test()
+Function()

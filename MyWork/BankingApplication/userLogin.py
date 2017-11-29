@@ -11,7 +11,7 @@ path = r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demorepo
 def userRegister():
     data = input( "Do you want to Register (y|n)" )
     if data == "y":
-        userRegistration(path).new_User_Registration()
+        userRegistration.userRegistration(path).new_User_Registration()
         print("User registered successfully")
         exit()
     elif data == "n":
