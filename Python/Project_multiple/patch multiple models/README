@@ -1,0 +1,12 @@
+To install the patch archive run the following command as root (this assumes you are in the directory containing confiure):
+	./configure
+
+Once the command has completed the patch update can begin.
+
+A few additional notes for Serviceguard systems.
+
+The Serviceguard system's cluster status can be viewed using the following command:
+	cmviewcl -v
+
+Additionally, before shutting down the cluster make sure that any file systems exported to other nodes are no longer mounted. The following command can be used to shut down the cluster:
+	cmhaltcl -f -v

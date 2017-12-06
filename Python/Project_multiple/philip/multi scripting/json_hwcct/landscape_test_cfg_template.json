@@ -1,0 +1,14 @@
+{
+"report_id":"<report_id>",
+"use_hdb":false,
+"blades":["<hostname>"],
+    "tests": [{
+            "package": "LandscapeTest", 
+            "test_timeout": 0, 
+            "id": 1, 
+            "config": {}, 
+            "class": "EvalOs"
+        }
+        
+]
+}

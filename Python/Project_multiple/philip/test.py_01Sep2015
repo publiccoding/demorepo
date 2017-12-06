@@ -1,0 +1,491 @@
+#!/usr/bin/python
+
+#import logging
+import optparse
+import os
+import re
+import subprocess
+
+
+def getFirmwareDict(csurData):
+	started = False
+	firmwareDict = {}
+
+	for data in csurData:
+		if not re.match(r'Firmware.*', data) and not started:
+			continue
+		elif re.match(r'Firmware.*', data):
+			started = True
+			continue
+		elif re.match(r'\s*$', data):
+			break
+		else:
+			firmwareList = data.split('|')
+			firmwareDict[firmwareList[0].strip()] = firmwareList[1].strip()
+	return firmwareDict
+#End getFirmwareDict(csurData)
+
+def getStorageFirmwareInventory(firmwareDict, updateList):
+	count = 0
+	hardDriveModels = []
+	hardDriveDict = {}
+	hardDriveUpdateDict = {}
+
+	fp = open(gapAnalysisFile, 'w')
+	
+	fp.write("Firmware:\n")
+
+	#hpacucli has been replaced by hpssacli so we need to check in case we are on an older system.
+	if os.path.isfile('/usr/sbin/hpssacli'):
+		arrayCfgUtilFile = '/usr/sbin/hpssacli'
+	else:
+		arrayCfgUtilFile = '/usr/sbin/hpacucli'
+
+	#Get list of storage controllers.
+	command = arrayCfgUtilFile + " ctrl all show status|egrep -o \"P.*Slot\s*[0-9]{1,2}\"|awk '{print $1\":\"$NF}'"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+	
+	controllerList = out.splitlines()	
+
+	for controller in controllerList:
+		controllerModel = controller[0:controller.index(':')]
+		controllerSlot = controller[controller.index(':')+1:len(controller)]
+
+		csurFirmwareVersion = firmwareDict.get(controllerModel)
+
+		command = arrayCfgUtilFile + " ctrl slot=" + controllerSlot + " show |grep \"Firmware Version\"|awk '{print $3}'"
+
+		result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+		out, err = result.communicate()
+		installedFirmwareVersion = out.strip()
+		
+                if installedFirmwareVersion != csurFirmwareVersion:
+			updateList.append(controllerModel)
+
+		fp.write(controllerModel + "|" + csurFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+
+		if controllerModel == 'P812':
+			csurFirmwareVersion = firmwareDict.get('D2700')
+			command = arrayCfgUtilFile + " ctrl slot=" + controllerSlot + " enclosure all show  detail|grep -m 1  \"Firmware Version\"|awk '{print $3}'"
+			result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+			out, err = result.communicate()
+			installedFirmwareVersion = out.strip()
+			
+			if installedFirmwareVersion != csurFirmwareVersion:
+				updateList.append('D2700')
+
+			fp.write("D2700|" + csurFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+		
+		#Get a list of all hard drives and thier firmware version.
+		command = arrayCfgUtilFile + " ctrl slot=" + controllerSlot + " pd all show detail|grep -A 2 --no-group-separator \"Firmware Revision\"|grep -v Serial|sed -e '$!N;s/\\n/ /'|awk '{print $6, $3}'|sort -k1"
+
+		result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+		out, err = result.communicate()
+
+		hardDriveList = out.splitlines()
+
+		#Get a unique list of hard drives managed by the controller.
+		for hd in hardDriveList:
+			hardDriveData = hd.split()
+
+			if count == 0:
+				hardDriveModels.append(hardDriveData[0].strip())
+				tmpHardDriveModel = hardDriveData[0]
+				count += 1
+			elif hardDriveData[0] != tmpHardDriveModel:
+				hardDriveModels.append(hardDriveData[0].strip())
+                        	tmpHardDriveModel = hardDriveData[0]
+
+		#Now check each hard drive's firmware version.
+		for hardDriveModel in hardDriveModels:
+			count = 0	
+
+			csurFirmwareVersion = firmwareDict.get(hardDriveModel)
+
+			#This acounts for the cases where the CSUR did not include a hard drive's firmware.
+			if csurFirmwareVersion is None:
+				if not hardDriveDict.has_key(hardDriveModel):
+					hardDriveDict[hardDriveModel] = ''
+					csurFirmwareVersion = 'Missing'
+					fp.write(hardDriveModel + "|" + csurFirmwareVersion + "| \n")
+				continue
+	
+			for hd in hardDriveList:
+				hardDriveData = hd.split()
+				if hardDriveData[0].strip() == hardDriveModel:
+					if hardDriveData[1].strip() != csurFirmwareVersion:
+						if not hardDriveDict.has_key(hardDriveModel):
+							hardDriveDict[hardDriveModel] = ''
+							if not hardDriveUpdateDict.has_key(hardDriveModel):
+								updateList.append(hardDriveModel)	
+							fp.write(hardDriveModel + "|" + csurFirmwareVersion + "|" + hardDriveData[1].strip() + "\n")
+							count += 1
+						break
+
+			if count == 0:
+				if not hardDriveDict.has_key(hardDriveModel):
+					hardDriveDict[hardDriveModel] = ''
+					fp.write(hardDriveModel + "|" + csurFirmwareVersion + "|" + driveData[1].strip() + "\n")
+
+		#Clear the list for the next iteration.
+		hardDrives = []
+	fp.close()
+#End getStorageFirmwareInventory(firmwareDict, updateList)
+
+
+def getNICFirmwareInventory(firmwareDict, updateList):
+	nicCardModels = []
+	count = 0
+
+	command = "lspci -v|grep -B1 NC --no-group-separator|sed -e '$!N;s/\\n/ /'|uniq -w 2|egrep -io \".{2}:.{2}\.[0-9]{1}|NC[0-9]+[a-z]{1,3}\"|sed -e '$!N;s/\\n/ /'| sort -k2"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+        out, err = result.communicate()
+
+        nicCardList = out.splitlines()
+
+	#Get a unique list of nic cards.
+	for nd in nicCardList:
+		nicCardData = nd.split()
+
+		if count == 0:
+			nicCardModels.append(nicCardData[1].strip())
+			tmpNicCardModel = nicCardData[1]
+			count += 1
+		elif nicCardData[1] != tmpNicCardModel:
+			nicCardModels.append(nicCardData[1].strip())
+			tmpNicCardModel = nicCardData[1]
+
+	#Get hwinfo which will be used to map nic card bus to nic device.
+	fp = open("hwinfo.log", 'w')
+	subprocess.call(["hwinfo", "--network"], stdout=fp)
+	fp.close()
+
+	fp = open(gapAnalysisFile, 'a')
+
+	#Loop through all nic cards to check thier firmware.  Only recoed one occcurance of a mismatch.
+	for nicCardModel in nicCardModels:
+		count = 0
+		csurNicCardFirmwareVersion = firmwareDict.get(nicCardModel)
+
+		for data in nicCardList:
+			nicCardData = data.split()
+
+			nicBus = nicCardData[0].strip()
+			installedNicCardModel = nicCardData[1].strip()
+
+			if installedNicCardModel == nicCardModel: 
+
+				command = "grep -A 5 " + nicBus + " hwinfo.log|grep \"Device File\"|awk '{print $3}'"
+				result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+				out, err = result.communicate()
+
+				nicDevice = out.strip()
+
+				command = "ethtool -i " + nicDevice + "|grep firmware-version|awk '{print $NF}'"
+				result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+				out, err = result.communicate()
+			
+				installedFirmwareVersion = out.strip()
+	
+				if installedFirmwareVersion != csurNicCardFirmwareVersion and count == 0:
+					updateList.append(nicCardModel)
+					fp.write(nicCardModel + "|" + csurNicCardFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+					count += 1
+					break
+
+		if count == 0:
+			fp.write(nicCardModel + "|" + csurNicCardFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+	os.remove("hwinfo.log")
+	fp.close()
+#End getNICFirmwareInventory(firmwareDict, updateList)
+
+
+def getRemainingFirmwareInventory(firmwareDict, updateList):
+	fp = open(gapAnalysisFile, 'a')
+	
+	#BIOS
+	command = "dmidecode -s bios-release-date"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+
+	biosFirmwareDate = out.strip()
+	biosFirmwareDateList = biosFirmwareDate.split('/')
+	installedFirmwareVersion = biosFirmwareDateList[2] + '.' + biosFirmwareDateList[0] + '.' + biosFirmwareDateList[1]
+
+	command = "dmidecode -s system-product-name|awk '{print $2}'"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+	
+	systemModel = out.strip()	
+
+	if systemModel == 'DL580':
+		firmwareType = 'BIOSDL580'
+		csurFirmwareVersion = firmwareDict.get(firmwareType)	
+	else:
+		firmwareType = 'BIOSDL980'
+		csurFirmwareVersion = firmwareDict.get(firmwareType)	
+
+	if installedFirmwareVersion != csurFirmwareVersion:
+		updateList.append(firmwareType)
+
+	fp.write(firmwareType + "|" + csurFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+
+	#Power Mangement
+	fp2 = open("dmidecode.log", 'w')
+	subprocess.call(["dmidecode"], stdout=fp2)
+	fp2.close()
+
+	command = "egrep -A 1 \"^\s*Power Management Controller Firmware\s*$\" dmidecode.log"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+
+	if result.returncode  != 0:
+		command = "egrep -B 1 \"^\s*SPI Board PAL\s*$\" dmidecode.log|grep -v SPI|sed -e 's/^[ \t]*//'"
+	else:
+		command = "egrep -A 1 \"^\s*Power Management Controller Firmware\s*$\" dmidecode.log |grep -v Power |sed -e 's/^[ \t]*//'"
+
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+
+	installedFirmwareVersion = out.strip()
+		
+	if systemModel == 'DL580':
+		firmwareType = 'PMCDL580'
+		csurFirmwareVersion = firmwareDict.get(firmwareType)	
+	else:
+		firmwareType = 'PMCDL980'
+		csurFirmwareVersion = firmwareDict.get(firmwareType)	
+
+	if installedFirmwareVersion != csurFirmwareVersion:
+		updateList.append(firmwareType)
+
+	fp.write(firmwareType + "|" + csurFirmwareVersion + "|" + installedFirmwareVersion + "\n")
+
+	os.remove("dmidecode.log")
+
+	#iLO
+	command = "hponcfg -g|grep \"Firmware Revision\"|awk '{print $4}'"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+
+	installedFirmwareVersion = out.strip()
+		
+	if installedFirmwareVersion != firmwareDict.get('iLO'):
+		updateList.append('iLO')
+
+	fp.write('iLO' + "|" + firmwareDict.get('iLO') + "|" + installedFirmwareVersion + "\n")
+
+	fp.close()
+#End getRemainingFirmwareInventory(firmwareDict, updateList)
+
+
+def getDriverInventory(csurData):
+        started = False
+	updateDriverList = []
+	
+	fp = open(gapAnalysisFile, 'a')
+	
+	fp.write("Driver:\n")
+
+	command = "egrep -o \"<version>[0-9]{2}\.[0-9]\" /etc/products.d/SUSE_SLES_SAP.prod|sed -re 's/<version>[0-9]{2}\.//'"
+	result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+	out, err = result.communicate()
+	SLESSPLevel = 'SP' + out.strip()
+	regex = re.escape(SLESSPLevel) + r".*"
+
+        for data in csurData:
+                if not re.match(regex, data) and not started:
+                        continue
+                elif re.match(regex, data):
+                        started = True
+                        continue
+                elif re.match(r'\s*$', data):
+                        break
+                else:
+                        csurDriverList = data.split('|')
+			csurDriver = csurDriverList[0].strip()
+			csurDriverVersion = csurDriverList[1].strip()
+
+			command = "modinfo " + csurDriver + "|grep -i ^version|awk '{print $2}'"
+                        result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+                        out, err = result.communicate()
+			installedDriverVersion = out.strip()
+			
+			fp.write(csurDriver + "|" + csurDriverVersion + "|" + installedDriverVersion + "\n")
+			
+                        if installedDriverVersion != csurDriverVersion:
+				updateDriverList.append(csurDriver)	
+
+	fp.close()
+
+	return updateDriverList
+#End getDriverInventory(csurData)
+
+
+def getSoftwareInventory(csurData):
+        started = False
+	updateSoftwareList = []
+	
+	fp = open(gapAnalysisFile, 'a')
+	
+	fp.write("Software:\n")
+
+        for data in csurData:
+                if not re.match(r'Software.*', data) and not started:
+                        continue
+                elif re.match(r'Software.*', data):
+                        started = True
+                        continue
+                elif re.match(r'\s*$', data):
+                        break
+                else:
+                        csurSoftwareList = data.split('|')
+			csurSoftware = csurSoftwareList[0].strip()
+			csurSoftwareEpoch = csurSoftwareList[1].strip()
+			csurSoftwareVersion = csurSoftwareList[2].strip()
+
+			command = "rpm -q --queryformat=\"%{buildtime} %{version}-%{release}\" " + csurSoftware + " 2> /dev/null"
+                        result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+                        out, err = result.communicate()
+
+			if result.returncode  != 0:
+				fp.write(csurSoftware + "|" + csurSoftwareVersion + "|Missing\n")
+				updateSoftwareList.append(csurSoftware)	
+				continue
+
+			installedSoftware = out.strip()
+			installedSoftwareList = installedSoftware.split()
+			installedSoftwareEpoch = installedSoftwareList[0]
+			installedSoftwareVersion = installedSoftwareList[1]
+			
+			fp.write(csurSoftware + "|" + csurSoftwareVersion + "|" + installedSoftwareVersion + "\n")
+			
+                        if installedSoftwareEpoch < csurSoftwareEpoch:
+				updateSoftwareList.append(csurSoftware)	
+
+	fp.close()
+
+	return updateSoftwareList
+#End getSoftwareInventory(csurData)
+
+
+def updateSoftware(softwareList):
+	installRPMProblemList = []
+
+	print "Phase 1: Updating software.\n"
+	for softwarePackage in softwareList:
+		command = "rpm -U --test " + softwarePackage
+
+		result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+		out, err = result.communicate()
+
+		if result.returncode  != 0:
+			installRPMProblemList.append(softwarePackage)		
+
+	if len(installRPMProblemList) != 0:
+		print "There were problems updating the following software components:\n"
+		for softwarePackage in installRPMProblemList:
+			print softwarePackage + "\n"
+	else:
+		print "Software update completed successfully."
+#End updateSoftware(softwareList)
+
+
+def updateDrivers(driverList):
+	installDriverProblemList = []
+
+	print "Phase 2: Updating drivers.\n"
+#End updateDrivers(driverList)
+
+
+def updateFirmware(firmwareList):
+	installFirmwareProblemList = []
+#End updateFirmware(firmwareList)
+
+
+def getpackageList(updateList, type):
+	updateImageList = []
+
+	if type == 'software':
+		for name in updateList:
+			command = "grep " + name + " " + csurDataFile + "|awk -F'|' '{print $4}'"
+			result = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+			out, err = result.communicate()
+
+			updateImageList.append(out.strip())
+
+	return updateImageList
+#End getpackageList(updateList, type)
+
+
+def init():
+	usage = 'usage: %prog [-g -f CSUR_FILENAME] or [-i -f CSUR_FILENAME]'
+	fp = ''
+
+	parser = optparse.OptionParser(usage=usage)
+
+	parser.add_option('-f', action='store', help='This option is mandatory and requires its argument to be the text file containing CSUR reference information.', metavar='FILENAME')
+	parser.add_option('-g', action='store_true', default=False, help='This option is used to collect system Gap Analysis data.', metavar=' ')
+	parser.add_option('-u', action='store_true', default=False, help='This option is used when a system update is to be performed.', metavar=' ')
+
+	(options, args) = parser.parse_args()
+
+	if not options.f:
+		parser.print_help()
+		exit(1)
+	else:
+		csurDataFile = options.f
+
+	if options.g == False and options.u == False:
+		parser.print_help()
+		exit(1)
+
+	if options.g and options.u:
+		parser.print_help()
+		exit(1)
+
+	if options.g:
+		action = 'gapAnalysis'
+	else:
+		action = 'csurUpdate'
+
+	try:
+		fp = open(csurDataFile)
+		csurData = fp.readlines()
+	except IOError:
+		print "Unable to open " + csurDataFile + " for reading.\n"
+		exit(1)
+	finally:
+		if fp != '':
+			fp.close()
+
+	return  csurDataFile, csurData, action
+#End init()
+		
+	
+#####################################################################################################
+# Main program starts here.
+#####################################################################################################
+gapAnalysisFile = 'gapAnalysis.txt'
+csurDataFile, csurData, action = init()
+
+firmwareToUpdate = []
+
+firmwareDict = getFirmwareDict(csurData[:])
+getStorageFirmwareInventory(firmwareDict.copy(), firmwareToUpdate)
+getNICFirmwareInventory(firmwareDict.copy(), firmwareToUpdate)
+getRemainingFirmwareInventory(firmwareDict.copy(), firmwareToUpdate)
+
+driversToUpdate = getDriverInventory(csurData[:])
+softwareToUpdate = getSoftwareInventory(csurData[:])
+
+if action != 'csurUpdate':
+	exit(0)
+
+if len(softwareToUpdate) != 0:
+	updateList = getpackageList(softwareToUpdate[:], 'software')	
+	updateSoftware(updateList[:])
+		
+#if len(driversToUpdate) != 0:
+#	updateDrivers(driversToUpdate)

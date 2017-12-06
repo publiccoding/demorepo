@@ -1,3 +1,0 @@
-
-class bankOperation:
-    pass

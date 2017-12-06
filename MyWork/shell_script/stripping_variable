@@ -1,0 +1,2 @@
+myvar="foobar";
+echo ${myvar:3}

@@ -1,0 +1,55 @@
+{
+"use_hdb":false,
+"blades":["hana1-data","hana2-data"],
+    "tests": [{
+            "package": "LandscapeTest", 
+            "test_timeout": 0, 
+            "id": 1, 
+            "config": {}, 
+            "class": "EvalOs"
+        },
+        {
+                "package": "FilesystemTest",
+                "test_timeout": 0,
+                "id": 2,
+                "config": {"mount":{"hana1-data":["/hana/log"],
+                        "hana2-data":["/hana/log"]
+
+                        },
+                        "duration":"short"
+                        },
+                "class": "LogVolumeIO"
+        },
+        {
+                "package": "FilesystemTest",
+                "test_timeout": 0,
+                "id": 3,
+                "config": {"mount":{"hana1-data":["/hana/data"],
+                        "hana2-data":["/hana/data"]
+
+                        },
+                        "duration":"short"
+                        },
+                "class": "DataVolumeIO"
+	},
+	{
+                "package": "NetworkTest",
+                "test_timeout": 0,
+                "id": 4,
+                "config": {"InternHosts":{"hana1-data":"172.31.1.10",
+                                                                  "hana2-data":"172.31.1.11"}
+                },
+                "class": "NetworkSingleStream"
+        },
+                {
+                "package": "NetworkTest",
+                "test_timeout": 0,
+                "id": 5,
+                "config": {"InternHosts":{"<hana1-data>":"172.31.1.10",
+                                                                  "hana2-data":"172.31.1.11"}
+        },
+        "class": "NetworkBidirectStream"
+                }
+
+	]
+}

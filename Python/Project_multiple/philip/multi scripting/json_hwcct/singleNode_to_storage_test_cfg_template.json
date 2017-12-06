@@ -1,0 +1,26 @@
+{
+"report_id":"<report_id>",
+"use_hdb":false, 
+"blades":["<hostname>"],
+"tests": [{
+            "package": "FilesystemTest",
+            "test_timeout": 0,
+            "id": 1,
+            "config": {"mount":{"<hostname>":["<mountpoint_of_data_volume>"]
+                                },
+                        "duration":"short"
+                      },
+            "class": "DataVolumeIO"
+        },
+	{
+            "package": "FilesystemTest",
+            "test_timeout": 0,
+            "id": 2,
+            "config": {"mount":{"<hostname>":["<mountpoint_of_log_volume>"]
+                                },
+                        "duration":"short"
+                      },
+            "class": "LogVolumeIO"
+        }
+]
+}
