@@ -338,12 +338,13 @@ def main():
                 signal.signal(signal.SIGINT, original_sigint_handler)
                 signal.signal(signal.SIGQUIT, original_sigquit_handler)
                 count += 1
+#from modules.fusionIO import UpdateFusionIO
         if 'isFusionIOSystem' in resumeDict:
             if resumeDict['isFusionIOSystem'] == 'yes':
                 original_sigint_handler = signal.getsignal(signal.SIGINT)
                 original_sigquit_handler = signal.getsignal(signal.SIGQUIT)
 				
-#from modules.fusionIO import UpdateFusionIO
+
 
                 updateFusionIO = UpdateFusionIO()
                 s = SignalHandler(updateFusionIO)
