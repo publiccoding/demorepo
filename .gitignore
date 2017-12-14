@@ -10,3 +10,4 @@
 *.tar.gz
 *.rar
 .mtj.tmp/
+*.exe
