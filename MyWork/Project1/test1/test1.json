@@ -1,0 +1,22 @@
+{
+  "people": [
+    {
+      "name": "johne",
+      "emails": [
+        "johnsim@gmail.com",
+        "john@gmail.com"
+      ],
+      "real": 73423.89,
+      "intvalue": 598343
+    },
+    {
+      "name": "badler",
+      "emails": [
+        "badler@gmail.com",
+        "bad@gmail.com"
+      ],
+      "license": true,
+      "data": null
+    }
+  ]
+}
