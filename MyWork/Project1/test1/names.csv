@@ -1,0 +1,17 @@
+Name=Operation
+Concurrent=Transfers
+Tus=Transfers
+Basic=TransfersOnly
+Batch=Transfer
+SkipDownload=Errors
+FetchRecent=Always
+FetchRecent=RefsDays
+FetchRecent=CommitsDays
+FetchRecentRefs=IncludeRemotes
+PruneOff=setDays
+PruneVerify=RemoteAlways
+PruneRemote=Name
+Access=Download
+Access=Upload
+Download=Transfers
+Upload=Transfers

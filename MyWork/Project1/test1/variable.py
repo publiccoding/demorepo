@@ -1,7 +1,6 @@
-
 # 1. Local and global variable 
-# 2. JSON
-# 3. 
+# 2. JSON OPERATION
+# 3. FILE OPERATION 
 
 # x = 'x global'
 # def variable_scope():
@@ -75,3 +74,13 @@
 
 
 
+# f = open('data.txt', 'r')
+# print(f.name)
+# print(f.mode)
+# f.close
+
+# with open('data.txt','r') as file:
+#     data = file.readlines().split()
+    
+
+# print(data)

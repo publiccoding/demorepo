@@ -1,0 +1,18 @@
+Name	Operation	Status
+Concurrent	Transfers	3
+Tus	Transfers	false
+Basic	TransfersOnly	false
+Batch	Transfer	true
+SkipDownload	Errors	false
+FetchRecent	Always	false
+FetchRecent	RefsDays	7
+FetchRecent	CommitsDays	0
+FetchRecentRefs	IncludeRemotes	true
+PruneOff	setDays	3
+PruneVerify	RemoteAlways	false
+PruneRemote	Name	origin
+Access	Download	none
+Access	Upload	none
+Download	Transfers	basic
+Upload	Transfers	basic
+

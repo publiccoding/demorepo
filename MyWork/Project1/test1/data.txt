@@ -1,0 +1,21 @@
+git lfs install
+git lfs track "*.tar.xz"
+git add myfile.tar.xz
+git commit -m "test"
+git push
+ConcurrentTransfers=3
+TusTransfers=false
+BasicTransfersOnly=false
+BatchTransfer=true
+SkipDownloadErrors=false
+FetchRecentAlways=false
+FetchRecentRefsDays=7
+FetchRecentCommitsDays=0
+FetchRecentRefsIncludeRemotes=true
+PruneOffsetDays=3
+PruneVerifyRemoteAlways=false
+PruneRemoteName=origin
+AccessDownload=none
+AccessUpload=none
+DownloadTransfers=basic
+UploadTransfers=basic

@@ -63,27 +63,6 @@ with open(r"C:\Users\kristhim\Desktop\thimma 01302017\programming\Practice\demor
                     #             print ( "Your Logged in successfully" )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 # import os
     # import signal
     #
