@@ -79,7 +79,7 @@ def init(applicationResourceFile,loggerName):
     handler = logging.FileHandler(patchApplicationLog)
     logger = logging.getLogger(loggerName)
     logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s',datefmt='%m/%d/%Y %H:%M:%S')
+    formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s',datefmt='%m/%b/%Y %H:%M:%S')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     streamHandler = logging.StreamHandler()
@@ -116,7 +116,7 @@ def main():
 
     applicationResourceFile = r"C:\Users\kristhim\Desktop\patchResourceFile"
     loggerName = 'patchLogger'
-    patchResourceDict = init( applicationResourceFile, loggerName )
+    patchResourceDict = init(applicationResourceFile, loggerName)
 
     if patchResourceDict:
         print("Patch resource is called in main program after -P option")
