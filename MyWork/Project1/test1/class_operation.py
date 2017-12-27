@@ -1,42 +1,43 @@
-# class Employee:
+class Employee:
 
-#     no_of_emp = 0
-#     raise_amt = 1.04
-#     def __init__(self,first,last,pay):
-#         self.first = first
-#         self.last = last
-#         self.pay = pay
-#         self.email = first+"."+last+"@company.com"
-#         Employee.no_of_emp +=1
-#     def fullname(self):
-#         return '{} {}'.format(self.first,self.last)
+    no_of_emp = 0
+    raise_amt = 1.04
+    def __init__(self,first,last,pay):
+        self.first = first
+        self.last = last
+        self.pay = pay
+        self.email = first+"."+last+"@company.com"
+        Employee.no_of_emp +=1
 
-#     def apply_raise(self):
-#         self.pay = int(self.pay * self.raise_amt)
+    def fullname(self):
+        return '{} {}'.format(self.first,self.last)
 
-#     @classmethod
-#     def set_raise_amt(cls,amount):
-#         cls.raise_amt=amount
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
 
-#     @classmethod
-#     def str_fmt_method(cls,emp_str):
-#         first,last,pay = emp_str.split("-")
-#         return cls(first,last,pay)
+    #@classmethod
+    def set_raise_amt(cls,amount):
+        cls.raise_amt=amount
 
-#     @staticmethod
-#     def is_workday(day):
-#         if day.weekday() == 5 or day.weekday == 6:
-#             return False
-#         return True
+    @classmethod
+    def str_fmt_method(cls,emp_str):
+        first,last,pay = emp_str.split("-")
+        return cls(first,last,pay)
 
-# class Developer (Employee ):
+    @staticmethod
+    def is_workday(day):
+        if day.weekday() == 5 or day.weekday == 6:
+            return False
+        return True
 
-#     raise_amt = 1.10
+class Developer (Employee ):
 
-#     def __init__(self,first,last,pay, prog_lang):
+    raise_amt = 1.10
 
-#         super().__init__(first,last,pay)
-#         self.prog_lang = prog_lang
+    def __init__(self,first,last,pay, prog_lang):
+
+        super().__init__(first,last,pay)
+        self.prog_lang = prog_lang
 
 # class Manager(Employee):
 
@@ -68,16 +69,17 @@
 # print(mgr1.printEmp())
 # mgr1.removeEmp(dev1)
 # print(mgr1.printEmp())
-#Developer.is_workday()
-#emp1 = Employee('thimma','krishnappa',95000)
-#emp2 = Employee('test','user',100000)
-#.set_raise_amt(1.05)
+Developer.is_workday()
+# emp1 = Employee('thimma','krishnappa',95000)
+# emp2 = Employee('test','user',100000)
+# emp1.set_raise_amt(1.06)
 # emp_string1='thimmarayan-krishnappa-90000'
-# emp_string1='test-user-95000'
-# Employee.str_fmt_method(emp_string1)
+emp_string1='test-user-95000'
+Employee.str_fmt_method(emp_string1)
+print(Employee.fullname,Employee.first)
 # print(new_emp1.email)
 # print(new_emp1.pay)
-# Employee.raise_amt=1.05
+#Employee.raise_amt=1.05
 # print(emp1.raise_amt)
 # print(emp2.raise_amt)
 # print(emp1.apply_raise())

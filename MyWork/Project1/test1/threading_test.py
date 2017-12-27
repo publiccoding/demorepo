@@ -1,6 +1,7 @@
 
 import threading
 import time
+import queue
 
 
 # def thread_test(args):
@@ -300,40 +301,130 @@ import time
 
 
 
-class myThread(threading.Thread):
+# class myThread(threading.Thread):
 
-    def __init__(self,number,func,args,name=None):
-        threading.Thread.__init__(self)
-        self.number = number
-        self.func = func
-        self.args = args
-        self.name = name
+#     def __init__(self,number,func,args,name=None):
+#         threading.Thread.__init__(self)
+#         self.number = number
+#         self.func = func
+#         self.args = args
+#         self.name = name
 
-    def run(self):
-        print(f"{self.name} Calling custom run method")
-        self.func(*self.args)
-        print(f"{self.name} Exiting custom run method")
+#     def run(self):
+#         print(f"{self.name} Calling custom run method")
+#         self.func(*self.args)
+#         print(f"{self.name} Exiting custom run method")
 
     
 
-def double(number, cycle):
-    for i in range(cycle):
-        number += number
-        #print(number)
-    print(number)
+# def double(number, cycle):
+#     for i in range(cycle):
+#         number += number
+#         #print(number)
+#     print(number)
 
-thread_list = []
-for i in range(50):
-    t = myThread(number = i + 1,
-                func=double,
-                args=(i, 3),
-                name='Thread{}'.format(i))
+# thread_list = []
+# for i in range(50):
+#     t = myThread(number = i + 1,
+#                 func=double,
+#                 args=(i, 3),
+#                 name='Thread{}'.format(i))
 
-    thread_list.append(t)
-    t.start()
-#print(thread_list)
+#     thread_list.append(t)
+#     t.start()
+# #print(thread_list)
 
-for t in thread_list:
-    t.join()
+# for t in thread_list:
+#     t.join()
+
+# class myThread(threading.Thread):
+
+#     def __init__(self,number,style, *args,**kwargs):
+#         super(myThread,self).__init__(*args,**kwargs)
+#         self.number = number
+#         self.style = style
+    
+#     def run(self, *args, **kwargs):
+#         print(f"{self.name} Calling custom run method")
+#         super(myThread,self).run(*args,**kwargs)
+#         print(f"{self.name} Exiting custom run method")
+
+# def sleeper(number,style):
+#     print(f'{ number} going to to sleep in style {style}')
+#     time.sleep(number)
+
+# t = myThread(number=5,style="yellow",target=sleeper, args=[3,'Yellow'])
+
+# t.start()
+# t.join()
+
+#Queue
+
+# q = queue.Queue()
+
+# for i in range(10):
+#     q.put(i)
+
+# while not q.empty():
+#     print(q.get())
+
+# def putting_thread(q):
+#     while True:
+#         print("starging thread")
+#         time.sleep(5)
+#         q.put(5)
+#         print("put something")
+
+# q = queue.Queue()
+# t = threading.Thread(target=putting_thread,args=(q,), daemon=True)
+# t.start()
+# # x=q.get() -> will store the value in variable x
+# q.put(5)
+# print(q.get())
+# print('first item gotton')
+# print(q.get())
+# #time.sleep(7)
+# print("finished....")
+# print(q.get())
+# print(q.empty())
+
+## FIFO
+
+# q = queue.Queue()
+
+# for i in range(10):
+#     q.put(i)
+
+
+# while not q.empty():
+#     print(q.get(), end='')
+
+# print('\n')
+
+# #LIFO
+
+# lq = queue.LifoQueue()
+
+# for i in range(10):
+#     lq.put(i)
+
+
+# while not lq.empty():
+#     print(lq.get(),end='')
+
+# print('\n')
+
+# #Priority Queue
+
+# pq = queue.PriorityQueue() # Gets smallest value first
+
+# pq.put((1,'Priority 1'))
+# pq.put((3,'Priority 3'))
+# pq.put((2,'Priority 2'))
+# pq.put((4,'Priority 4'))
+
+# for i in range(pq.qsize()):
+#     print(pq.get()[1])
+
 
 
