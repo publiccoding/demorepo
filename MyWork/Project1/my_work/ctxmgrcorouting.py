@@ -46,10 +46,12 @@ def Coroutine():
     
     count = 0
     avg = 0
+    val = 0
     while True:
         data = yield avg
         count += 1
-        avg = (data + avg ) / count
+        val = data + val 
+        avg = val / count
         #print(val)
    
         
@@ -58,3 +60,4 @@ next(mycor)
 mycor.send(40)
 mycor.send(50)
 mycor.send(30)
+
