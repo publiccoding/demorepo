@@ -7,7 +7,6 @@
 # else:
 #     print("this will print")
 
-
 # try : 
 #     f =open('data.txt') 
 #     #var = bar_var
@@ -20,9 +19,7 @@
 # finally:
 #     f.close()
 
-
 # import random 
-
 # value = random.uniform(1,5)
 # print(value)
 
@@ -126,12 +123,9 @@ sentence = 'Start a sentence and then bring it to an end'
 # for match in matches:
 #     print(match)
 
-
-
 #CSV FILE OPERATION 
 
 import csv 
-
 
 # with open('name.csv', 'r') as csv_file:
 #     csv_reader = csv.DictReader(csv_file, delimiter='\t')
@@ -153,23 +147,5 @@ import csv
 #     #next(csv_reader)
 #         for line in csv_reader:
 #             csv_writer.writerow(line)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

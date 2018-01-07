@@ -16,7 +16,7 @@ from contextlib import contextmanager
 #     def __exit__(self, exc_type, exc_value, traceback):
 #         if self.file:
 #             self.file.close()
-
+k
     
 # with mywith('tests.py', 'r') as f:
 #     data = f.read()
@@ -42,22 +42,22 @@ from contextlib import contextmanager
 # Couroutine in python 
 
 
-def Coroutine():
+# def Coroutine():
     
-    count = 0
-    avg = 0
-    val = 0
-    while True:
-        data = yield avg
-        count += 1
-        val = data + val 
-        avg = val / count
-        #print(val)
+#     count = 0
+#     avg = 0
+#     val = 0
+#     while True:
+#         data = yield avg
+#         count += 1
+#         val = data + val 
+#         avg = val / count
+#         #print(val)
    
         
-mycor = Coroutine()
-next(mycor)
-mycor.send(40)
-mycor.send(50)
-mycor.send(30)
+# mycor = Coroutine()
+# next(mycor)
+# mycor.send(40)
+# mycor.send(50)
+# mycor.send(30)
 

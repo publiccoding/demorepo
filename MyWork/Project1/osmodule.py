@@ -85,22 +85,22 @@ import psutil
 # for key in ["a", "b", "c"]:
 #     print(getattr(myobject, key, None))
 
-def minimize():
-    current = yield
-    #maxvalue = yield
-    print("first current",current)
-    #print("max value is ", maxvalue)
-    while True:
-        value = yield "myvalue"
-        print("value in while ",value)
-        print("2nd current in while",current)
-        current = min(value,current)
-        print("3rd current in while",current)
+# def minimize():
+#     current = yield
+#     #maxvalue = yield
+#     print("first current",current)
+#     #print("max value is ", maxvalue)
+#     while True:
+#         value = yield "myvalue"
+#         print("value in while ",value)
+#         print("2nd current in while",current)
+#         current = min(value,current)
+#         print("3rd current in while",current)
 
 
-it = minimize()
-next(it)            # Prime the generator
-print(it.send(10))
-print(it.send(4))
-print(it.send(22))
-print(it.send(-1))
+# it = minimize()
+# next(it)            # Prime the generator
+# print(it.send(10))
+# print(it.send(4))
+# print(it.send(22))
+# print(it.send(-1))

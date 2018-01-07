@@ -315,8 +315,6 @@ import queue
 #         self.func(*self.args)
 #         print(f"{self.name} Exiting custom run method")
 
-    
-
 # def double(number, cycle):
 #     for i in range(cycle):
 #         number += number
