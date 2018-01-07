@@ -25,4 +25,4 @@ t='thimma'
 print(sys.platform)
 print(2**200)
 print('Spam!'*8)
-input()
+#input()
