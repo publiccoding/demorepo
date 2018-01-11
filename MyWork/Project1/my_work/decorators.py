@@ -132,7 +132,6 @@ print(len(student1))
 
 # ----------------------------Clousers-------------------------------------
 
-
 # class Average():
 #     def __init__(self):
 #         self.series = []

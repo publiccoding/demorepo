@@ -16,7 +16,7 @@ from contextlib import contextmanager
 #     def __exit__(self, exc_type, exc_value, traceback):
 #         if self.file:
 #             self.file.close()
-k
+
     
 # with mywith('tests.py', 'r') as f:
 #     data = f.read()

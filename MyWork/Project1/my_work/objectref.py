@@ -108,18 +108,18 @@
 # #print(dir(Bus.__init__))
 # print(Bus.__init__.__defaults__[0] is bus2.passenger)
 
+import pdb 
+import weakref
 
-# import weakref
-
-# s1 = {1,2,3}
-# s2 = s1
-
-# def bye():
-#     print('Test bye...')
-# end = weakref.finalize(s1,bye)
-# print(end.alive)
-# del s1
-# print(end.alive)
-# s2 = 'spam'
-# print(end.alive)
+s1 = {1,2,3}
+s2 = s1
+pdb.set_trace()
+def bye():
+    print('Test bye...')
+end = weakref.finalize(s1,bye)
+print(end.alive)
+del s1
+print(end.alive)
+s2 = 'spam'
+print(end.alive)
 
