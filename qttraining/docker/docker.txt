@@ -1,0 +1,30 @@
+$ sudo apt-get update
+$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+
+Install using script
+
+$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+
+Uninstall Docker CE(community edition)
+
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
+
+Docker commands:
+
+docker run  -> when you want to run image to form a container  docker will install newly 
+docker start -> start the container 
+docker stop -> stop the started container
+docker rm -> remove the container ( provide the container ID will through if remove running container use -f to force fully remove) 
+docker images -> available docker images 
+docker ps -> running docker container 
+docker ps -a -> all the docker container including not running 
+docker ps -a -q -> list of container id 
+docker rm (docker ps -a -q ) 
+
+Registry : 
+
+Is a library where all the docker image stored ( docker hub ) or organization one docker repository 
+	-> public ( dockerhub.com)
+	-> private ( 

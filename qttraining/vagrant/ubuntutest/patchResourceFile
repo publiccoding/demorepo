@@ -1,0 +1,102 @@
+########################################################
+#Directories and files used by the application.
+#This file is hardcoded. patchResourceFile = "hp/support/patches/resourceFiles/patchResourceFile"
+#Also, it is expected that all files/directories exist off of /hp/support.
+#Do not change the names on the left side as they are 
+#the key names (resource names) used by the application.
+#Example patch directory structure.
+#/hp/support/patches/OSDistLevel/kernelRPMs/
+#/hp/support/patches/OSDistLevel/OSRPMs/
+#/hp/support/patches/FusionIO/
+########################################################
+
+########################################################
+#This is the main patch directory name.
+########################################################
+patchBaseDir = '/hp/support/patches'
+logBaseDir = '/hp/support/patches/log'
+
+patchApplicationLog = 'osPatchUpdateLog.log'
+fioStatusLog = 'fioStatusLog.log'
+postUpdateResumeLog = 'resumeLog.log'
+
+########################################################
+#This is the list of supported operating systems that can be updated.
+#AKA OSDistLevel
+########################################################
+11.4 = 'SLES_SP4'
+
+########################################################
+#This is the kernel sub directory names.
+#Starting with SLES4SAP SP4 there is not a separate 
+#set of kernel patches for Superdome systems.
+########################################################
+kernelSubDir = 'kernelRPMs'
+
+########################################################
+#This is the OS sub directory name.
+########################################################
+osSubDir = 'OSRPMs'
+
+########################################################################
+#This is a comma separated list of RPMs that need to be removed either
+#by specific package version or name only, e.g. cyrus-sasl or
+#cyrus-sasl-2.1.22-182.23.1.  If only the name is given then all
+#versions of the package will be removed.
+#java and jett8-dist are removed, since they are left over from the upgrade
+#to SP4
+########################################################################
+rpmsToRemove = 'java, jetty8-dist'
+
+########################################################################
+#This is the directory containing additional RPMs which
+#will be installed before the system is updated.
+########################################################################
+additionalSubDir = 'additionalRPMs'
+
+########################################################################
+#This is a comma separated list of RPMs that need to be added.
+#Additionally, the RPM needs to proceed the package name followed by a colon.
+########################################################################
+rpmsToAdd = 'java-1_7_1-ibm, java-1_7_1-ibm-jdbc, java-1_7_1-ibm-alsa, java-1_7_1-ibm-plugin, python-curses'
+
+########################################################
+#This is the SUSE_SLES_SAP-release RPM.
+#It is here due to issues with installation.
+#An empty string means that either an update RPM is not 
+#available or that the new updated RPM does not have an 
+#issue.
+########################################################
+suseSLESSAPReleaseRPM = ''
+
+########################################################
+#This is the FusionIO software sub directory name.
+########################################################
+fusionIOSubDir = 'FusionIO'
+
+########################################################
+#This is the current FusionIO firmware revision.
+########################################################
+currentFusionIOFirmwareVersion = 'v7.1.17'
+
+########################################################
+#This is the current list of FusionIO firmware revisions.
+#These are the revisions from which an automatic upgrade
+#is supported
+########################################################
+fusionIOFirmwareVersionList = 'v7.1.17 v7.1.15 v7.1.13 v7.0.2 v6.0.0'
+
+########################################################
+#This is the current source RPM for FusionIO driver.
+########################################################
+fusionIODriverSrcRPM = 'iomemory-vsl-3.2.8.1350-1.0.src.rpm'
+
+########################################################
+#This is the patch bundle version information. 
+########################################################
+releaseNotes = 'HPE Converged Systems for SAP HANA Patch Bundle|Version: 2017.07-0|Cutoff Date: 2017-08-07|Install Date:|Comments'
+
+########################################################
+#This is the patch bundle version information file. 
+########################################################
+versionInformationFile = '/etc/osPatchUpdate-release'
