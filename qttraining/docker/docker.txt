@@ -1,3 +1,6 @@
+
+Docker installation method1( only Testing and Development)
+
 $ sudo apt-get update
 $ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
 
@@ -7,10 +10,71 @@ $ curl -fsSL get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 
 Uninstall Docker CE(community edition)
-
 $ sudo apt-get purge docker-ce
 $ sudo rm -rf /var/lib/docker
 
+Docker installation method2( only Testing and Development)
+
+$ sudo apt-get update
+$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+
+Set up the repository
+
+1.Install packages to allow apt to use a repository over HTTPS:
+
+$ sudo apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+
+2.Add Docker’s official GPG key:
+
+$ curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -	
+
+3.Use the following command to set up the stable repository.
+
+$ sudo add-apt-repository \
+       "deb https://apt.dockerproject.org/repo/ \
+       ubuntu-$(lsb_release -cs) \
+       main"
+4.update the packages
+
+sudo apt-get update
+
+5.Install the latest version 
+$ sudo apt-get -y install docker-engine
+
+6.Check the available version 
+
+apt-cache madison docker-engine
+
+7. Install the specific version 
+
+$ sudo apt-get -y install docker-engine=1.13.1-0~ubuntu-trusty
+	
+	
+maping container ports 
+
+docker run -d -p 8080:8080 jenkins ( -d - run container in detached mode background process)
+docker run -d -p 8081:8080 jenkins:1.619.3
+docker ps 
+docker exec -it <containerid> /bin/bash
+docker run -it <container> /bin/bash 
+
+
+creating own Docker image using base image 
+
+FROM ubuntu:14.04
+MAINTAINER thimmarayan.krishnappa@gmail.com
+RUN apt-get update -y && apt-get install apache2 -y 
+CMD ["echo","helloworld"]
+
+	
+docker build -t myfirst:0.1 <path_to_Dockerfile>
+
+	
 Docker commands:
 
 docker run  -> when you want to run image to form a container  docker will install newly 
@@ -21,7 +85,11 @@ docker images -> available docker images
 docker ps -> running docker container 
 docker ps -a -> all the docker container including not running 
 docker ps -a -q -> list of container id 
-docker rm (docker ps -a -q ) 
+docker rm (docker ps -a -q ) -> to remove all the containers 
+docker version -> check the installed version 
+docker pull hello-world -> download the docker image from the public registry 
+
+
 
 Registry : 
 
