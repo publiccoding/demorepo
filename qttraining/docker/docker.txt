@@ -22,12 +22,7 @@ Set up the repository
 
 1.Install packages to allow apt to use a repository over HTTPS:
 
-$ sudo apt-get install -y --no-install-recommends \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common
-
+$ sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
 
 2.Add Docker’s official GPG key:
 
@@ -35,10 +30,8 @@ $ curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
 
 3.Use the following command to set up the stable repository.
 
-$ sudo add-apt-repository \
-       "deb https://apt.dockerproject.org/repo/ \
-       ubuntu-$(lsb_release -cs) \
-       main"
+$ sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main"
+
 4.update the packages
 
 sudo apt-get update
@@ -54,7 +47,6 @@ apt-cache madison docker-engine
 
 $ sudo apt-get -y install docker-engine=1.13.1-0~ubuntu-trusty
 	
-	
 maping container ports 
 
 docker run -d -p 8080:8080 jenkins ( -d - run container in detached mode background process)
@@ -62,7 +54,16 @@ docker run -d -p 8081:8080 jenkins:1.619.3
 docker ps 
 docker exec -it <containerid> /bin/bash
 docker run -it <container> /bin/bash 
+docker run -m # memory allocation 
 
+Working on Docker volume :
+docker volume ls 
+docker volume create/inspect/ls/prune/rm 
+docker inspect <image-id>
+docker history <image-id>
+docker run --name voltest -v /usr/local/tomcat/webapps -d -p 8080:8080
+docker run --name voltest -v /home/vagrant/webapps/:/usr/local/tomcat/webapps -d -p 8080:8080
+docker exec -it <containerid> ls /usr/local/tomcat/webapps  -> execute command without running the docker command
 
 creating own Docker image using base image 
 
@@ -70,11 +71,25 @@ FROM ubuntu:14.04
 MAINTAINER thimmarayan.krishnappa@gmail.com
 RUN apt-get update -y && apt-get install apache2 -y 
 CMD ["echo","helloworld"]
-
 	
 docker build -t myfirst:0.1 <path_to_Dockerfile>
+docker pull tomcat 
+docker run -it --rm -p 8080:8080 tomcat 
+cd webapps 
+wget <path to war file>
+restart catalina services ( stopa nd restart or start)
 
-	
+creating own Docker image for tomcat and deploy war file  
+
+FROM tomcat:7
+MAINTAINER thimmarayan.krishnappa@gmail.com
+ENV mystartfolder /usr/local/tomcat/webapps # set the Environment variable and use them in WORKDIR ${mystartfolder}
+ADD ../petclinic.war /usr/local/tomcat/webapps # add command to copy file folder into container and you can use url link or wget command to download in ADD but in COPY it is not possible 
+RUN cd webapps && wget <path to war file> 
+WORKDIR ${mystartfolder}
+EXPOSE 8080  # inoforming docker to user the port you cand add multiple by [port/protocol ...] on list 
+CMD ["catalina.sh","run"]
+
 Docker commands:
 
 docker run  -> when you want to run image to form a container  docker will install newly 
@@ -89,10 +104,78 @@ docker rm (docker ps -a -q ) -> to remove all the containers
 docker version -> check the installed version 
 docker pull hello-world -> download the docker image from the public registry 
 
+Docker Networking:
 
+docker run --name C1 -d tomcat:7 
+docker run --name C2 -d tomcat:7 
+docker exec -it C1 /bin/bash 
+docker inspect C2 # find the ip address 
+ping <ip>
+docker network ls # Driver is how networking works 
+#containier network module ( CNM)
+docker network create -d bridge --subnet 10.10.10.0/24 my-bridge
+docker network inspect <name>
+docker run --name C2 --network my-bridge -d tomcat:7
+docker network rm <network-id>
 
 Registry : 
 
 Is a library where all the docker image stored ( docker hub ) or organization one docker repository 
 	-> public ( dockerhub.com)
 	-> private ( 
+
+#KUBERNOTES 
+
+Master 
+    -> API Manager
+    -> controller 
+    -> Scheduler 
+    -> cluster Store 
+Node(minion):
+    -> kublet
+    -> docker engine ( docker , Rocket)
+    -> kube proxy 
+
+Kubernetes -> Pod -> which has container and it will be assigned with IP ( even two container have the same ip with different ports)
+Pod State:
+    -> pending 
+    -> running
+    -> Failed/stop
+
+Service :
+    -> logical components behavis has load balaner with help of (lable assginged to each pod)
+    -> 
+Deployments:
+    -> commit and rollback 
+
+Object in the K8s API : 
+
+    Pods: Atomic units of scheduling 
+    Replication Controllers: Scale pods, desired state etc..
+    Deployments: RC + rolling updates
+    Services: stable networking 
+
+Kubernetes installation :
+    Production :
+        KOPS => AWS 
+        GKE => most simplest kubernetes is a service 
+         
+Manifiest file creation :
+
+pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  containers:
+    - name: hello-ctr 
+    image: jenkins
+    ports:
+    - containerPort: 8080
+
+Creating PODS:
+kubectl get nodes
+kubectl create -f pod.yml 
+kubectl get pods 
+kubectl describe pods 
