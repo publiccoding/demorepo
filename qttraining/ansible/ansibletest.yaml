@@ -1,0 +1,12 @@
+#ansilbe test
+
+- hosts: webserver
+  become: yes
+  tasks:
+    - name: update packages
+      apt:
+        update_cache: yes
+    - name: install apache
+      apt:
+        name: apache2
+        state: present

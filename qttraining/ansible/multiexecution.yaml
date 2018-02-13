@@ -1,0 +1,37 @@
+---
+- hosts: appserver
+  vars: 
+    package: tomcat7
+    state_set: absent
+  become: yes
+  tasks:
+    - name: "update apt rep"
+      apt: 
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+    - name: install "{{ package }}"
+      apt:
+        name: "{{ pack_name }}"
+        state: "{{ state_set }}"
+      notify:
+      - Restart Apache
+      when: ansible_os_family == "Debian"
+    - name: install apache for RedHat
+      yum:
+        name: "{{ pack_name }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+      notify:
+      - Restart Apache
+      when: ansible_os_family == "RedHat"
+      command: cp -n {{ homepage }} {{ backuppath }}
+    - name: Create the home page
+      copy:
+        dest: "{{ homepage }}"
+        content: "<h1> Welcome to Apache (controller ansible) </h1>"
+  handlers:
+  - name: Restart Apache
+    service:
+      name: "{{ pack_name }}"
+      state: restarted
+      when: state_set == "present"

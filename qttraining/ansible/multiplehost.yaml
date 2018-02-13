@@ -1,0 +1,40 @@
+---
+- hosts: appserver
+  become: yes
+  tasks:
+    - name: "update apt rep"
+      apt: 
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+    - name: install tomcat7
+      apt:
+        name: tomcat7
+        state: present
+      notify:
+      - restart tomcat7
+      when: ansible_os_family == "Debian"
+    - name: install apache for RedHat
+      yum:
+        name: httpd
+        state: present
+      notify:
+      - Restart Httpd
+
+    - name: download jenkins from web web
+      get_url:
+        dest: /var/lib/tomcat7/webapps/jenkins.war
+        url: http:/ftp-chi/*/jenkins.war
+      notify:
+      - restart tomcat7
+  
+  handlers:
+  - name: restart tomcat7
+    service:
+      name: tomcat7
+      state: restarted
+  
+  handlers:
+  - name: Restart Httpd
+    service:
+      name: httpd
+      state: restarted

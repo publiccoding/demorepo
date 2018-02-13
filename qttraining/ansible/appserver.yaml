@@ -1,0 +1,19 @@
+---
+- hosts: appserver
+  become: yes
+  tasks:
+    - name: "update apt rep"
+      apt: 
+        update_cache: yes
+    - name: install tomcat7
+      apt:
+        name: tomcat7
+        state: present
+    - name: download jenkins from web web
+      get_url:
+        dest: /var/lib/tomcat7/webapps/jenkins.war
+        url: http:/ftp-chi/*/jenkins.war
+    - name: restart tomcat
+      service:
+        name: tomcat7
+        state: restart

@@ -15,7 +15,19 @@ Grouping of the hosts
 
 in /etc/ansible/hosts file you can group the hosts by by square brackets [hosts]
 ansible -m ping <group_name>
+ansible -m setup localhost # to get the host details with adhoc command 
+ansible -m setup -a 'filter=*os* <ip> # adhoc commad will be used one time to get detail( it is development command)
+ansible-playbook -i invertory_file test.yaml 
+ansible --become -m apt -a 'update_cache=yes' ip -K --list-hosts # --become is sudo user persion will ask for password 
+ansible-playbook hellworl.yaml --list-hosts
+ansible --become  -K -i newinventory -m "apt" -a "name=tomcat7 state=present" webserver # install tomcat on ther server 
+ansible --become  -K -i newinventory -m "apt" -a "name=tomcat7 state=absent purge=yes" webserver # uninstall tomcat on the server 
 
+ansible -m setup -a "filter=*_os*" all  # use host_family to filter os type and through fact you can 
+changing the ansible variable in commad line(highest priority cmd ->playbook-inventory->groupvariable)
+ansible-playbook -K -i inventory -e "state_set: absent" -e "xyz"   *.yaml
+
+for redhat set selinux as permissive mode 
 ---
 - BusDetails:
   - Source: HYD
