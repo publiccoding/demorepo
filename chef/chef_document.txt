@@ -1,0 +1,39 @@
+https://api.chef.io/organizations/thimma/nodes
+
+ChefDK-> chef development kit should be installed in server(windows,linux),
+         it act a workstation to upload the chef cookbook and interaction with chef-server and enivironment path should be set 
+starter kit -> Should be downloaded from chef server it will help to connect the workstation with chef server from your chef workstation
+         ( for all the chef activity with that chef-server)
+chef Agent -> will be running on nodes and based on the convergence it will communicate with chef server for available update
+
+Bootstraping chef node:
+PS C:\Users\kristhim\Desktop\thimma\demorepo\chef\chef-starter\chef-repo> knife bootstrap 54.149.74.229 --ssh-user ubunt
+u --sudo --identity-file C:\Users\kristhim\Desktop\thimma\keys\chefpem.pem -N ec2-54-149-74-229.us-west-2.compute.amazonaws.com
+
+Chef commands:
+
+chef generate cookbook first-cookbook 
+knife node list
+knife upload cookbook first-cookbook
+berks install 
+berks upload
+chef generate attribute <path to cookbook> <name_of_the_attribute>
+chef generate attribute . default
+chef generate recipes . myreciep
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
