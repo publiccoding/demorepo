@@ -1,0 +1,1 @@
+default['testkitchen']['utility'] =['tree','git','nano']

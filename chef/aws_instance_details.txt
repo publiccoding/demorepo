@@ -1,16 +1,15 @@
 Redhat:
 
-Public DNS (IPv4) -> ec2-34-217-90-65.us-west-2.compute.amazonaws.com
-IPv4 Public IP - 34.217.90.65
+Public DNS (IPv4) -> ec2-54-203-12-86.us-west-2.compute.amazonaws.com
+IPv4 Public IP - 54.203.12.86
 
 Ubuntu:
-Public DNS (IPv4) -> ec2-54-149-74-229.us-west-2.compute.amazonaws.com
-IPv4 Public IP -> 54.149.74.229
-
-SUSE:
-Public DNS (IPv4) -> ec2-34-214-52-113.us-west-2.compute.amazonaws.com
-IPv4 Public IP -> 34.214.52.113
+Public DNS (IPv4) -> ec2-54-191-128-145.us-west-2.compute.amazonaws.com
+IPv4 Public IP -> 54.191.128.145
 
 
-ssh -i "chef.pem.pem" ec2-user@ec2-34-214-52-113.us-west-2.compute.amazonaws.com
-knife bootstrap 34.214.52.113 --ssh-user ec2-use --sudo --identity-file C:\Users\kristhim\Desktop\thimma\keys\chef.pem.pem -N ec2-34-214-52-113.us-west-2.compute.amazonaws.com
+ssh -i "chef.pem.pem" ec2-user@ec2-54-203-12-86.us-west-2.compute.amazonaws.com
+ssh -i "chef.pem.pem" ubuntu@ec2-54-191-128-145.us-west-2.compute.amazonaws.com
+
+knife bootstrap 54.203.12.86 --ssh-user ec2-user --sudo --identity-file C:\Users\kristhim\Desktop\thimma\keys\chef.pem.pem -N ec2-54-203-12-86.us-west-2.compute.amazonaws.com
+knife bootstrap 54.191.128.145 --ssh-user ubuntu --sudo --identity-file C:\Users\kristhim\Desktop\thimma\keys\chef.pem.pem -N ec2-54-191-128-145.us-west-2.compute.amazonaws.com
