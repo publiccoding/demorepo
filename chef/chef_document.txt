@@ -24,11 +24,23 @@ chef generate file . myreciep
 chef generate template . message.txt # Edit the contect dynamially 
 cookbook-file -> to copy file from source to destination directory 
 
+#create role in roles directory and update them ( rolese are collection of sequence runlist will be applied to the server )
+
+knife role list
+knife role from file .\myrole 
+knife role bulk delete '^server'
+knife node run_list add <public_dns> 'role[myrole]'
+knife node run_list add <public_dns> 'recipe[cookbookname::recipe]'
+
+#enivironment in the chef used to maintain the cookbook version, change in the cookbook version include the run_list which is set and applied on each convergence
+
+knife enivironment from file .\enivironments\dev.rb
+knife enivironment list 
+knife enivironment bulk delete '^server'
+
+
 <%= "my name is #{$ruby}" %> - dynamic content in the file
-
 During every convergence node object will be created by Ohai and it collect all the system value 
-
-
 # if node['platform'] == 'ubuntu' 
 #     default['first-cookbook']['package_name'] = 'apache2'
 # else node['platform'] == 'redhat'
